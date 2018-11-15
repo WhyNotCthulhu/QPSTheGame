@@ -104,7 +104,6 @@
             this.lblGold.Name = "lblGold";
             this.lblGold.Size = new System.Drawing.Size(0, 13);
             this.lblGold.TabIndex = 5;
-            this.lblGold.Click += new System.EventHandler(this.label6_Click);
             // 
             // lblExperience
             // 
@@ -285,7 +284,6 @@
             this.Controls.Add(this.label1);
             this.Name = "QPSTheGame";
             this.Text = "Quartz Parchment Shears";
-            this.Load += new System.EventHandler(this.QPSTheGame_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvInventory)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvQuests)).EndInit();
             this.ResumeLayout(false);
