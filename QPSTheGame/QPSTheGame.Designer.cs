@@ -284,6 +284,7 @@
             this.Controls.Add(this.label1);
             this.Name = "QPSTheGame";
             this.Text = "Quartz Parchment Shears";
+            this.Load += new System.EventHandler(this.QPSTheGame_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvInventory)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvQuests)).EndInit();
             this.ResumeLayout(false);
