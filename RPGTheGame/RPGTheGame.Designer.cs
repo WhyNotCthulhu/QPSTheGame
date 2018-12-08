@@ -1,6 +1,6 @@
-﻿namespace QPSTheGame
+﻿namespace RPGTheGame
 {
-    partial class QPSTheGame
+    partial class RPGTheGame
     {
         /// <summary>
         /// Required designer variable.
@@ -256,7 +256,7 @@
             this.dgvQuests.Size = new System.Drawing.Size(312, 189);
             this.dgvQuests.TabIndex = 20;
             // 
-            // QPSTheGame
+            // RPGTheGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -282,9 +282,9 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "QPSTheGame";
-            this.Text = "Quartz Parchment Shears";
-            this.Load += new System.EventHandler(this.QPSTheGame_Load);
+            this.Name = "RPGTheGame";
+            this.Text = "The RPG Game";
+            this.Load += new System.EventHandler(this.RPGTheGame_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvInventory)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvQuests)).EndInit();
             this.ResumeLayout(false);

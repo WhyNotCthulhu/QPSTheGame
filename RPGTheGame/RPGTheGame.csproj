@@ -46,11 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="QPSTheGame.cs">
+    <Compile Include="RPGTheGame.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="QPSTheGame.Designer.cs">
-      <DependentUpon>QPSTheGame.cs</DependentUpon>
+    <Compile Include="RPGTheGame.Designer.cs">
+      <DependentUpon>RPGTheGame.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,8 +63,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="QPSTheGame.resx">
-      <DependentUpon>QPSTheGame.cs</DependentUpon>
+    <EmbeddedResource Include="RPGTheGame.resx">
+      <DependentUpon>RPGTheGame.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

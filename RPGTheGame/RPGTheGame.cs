@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 using Engine;
 
-namespace QPSTheGame
+namespace RPGTheGame
 {
-    public partial class QPSTheGame : Form
+    public partial class RPGTheGame : Form
     {
         private Player _player;
-        private Monster _currentMonster;
+        private Enemy _currentEnemy;
 
-        public QPSTheGame()
+        public RPGTheGame()
         {
             InitializeComponent();
 
@@ -149,19 +149,19 @@ namespace QPSTheGame
                 }
             }
 
-            // Does the location have a monster?
-            if (newLocation.MonsterLivingHere != null)
+            // Does the location have an enemy?
+            if (newLocation.EnemyLivingHere != null)
             {
-                rtbMessages.Text += "You see a " + newLocation.MonsterLivingHere.Name + Environment.NewLine;
+                rtbMessages.Text += "You see a " + newLocation.EnemyLivingHere.Name + Environment.NewLine;
 
-                // Make a new monster, using the values from the standard monster in the World.Monster list
-                Monster standardMonster = World.MonsterByID(newLocation.MonsterLivingHere.ID);
+                // Make a new enemy, using the values from the standard enemy in the World.Monster list
+                Enemy standardMonster = World.MonsterByID(newLocation.EnemyLivingHere.ID);
 
-                _currentMonster = new Monster(standardMonster.ID, standardMonster.Name, standardMonster.MaximumDamage, standardMonster.RewardExperiencePoints, standardMonster.RewardGold, standardMonster.CurrentHitPoints, standardMonster.MaximumHitPoints);
+                _currentEnemy = new Enemy(standardMonster.ID, standardMonster.Name, standardMonster.MaximumDamage, standardMonster.RewardExperiencePoints, standardMonster.RewardGold, standardMonster.CurrentHitPoints, standardMonster.MaximumHitPoints);
 
                 foreach (LootItem lootItem in standardMonster.LootTable)
                 {
-                    _currentMonster.LootTable.Add(lootItem);
+                    _currentEnemy.LootTable.Add(lootItem);
                 }
 
                 cbxWeapons.Visible = true;
@@ -171,7 +171,7 @@ namespace QPSTheGame
             }
             else
             {
-                _currentMonster = null;
+                _currentEnemy = null;
 
                 cbxWeapons.Visible = false;
                 cbxPotions.Visible = false;
@@ -289,35 +289,35 @@ namespace QPSTheGame
             // Get the currently selected weapon from the cbxWeapons ComboBox
             Weapon currentWeapon = (Weapon)cbxWeapons.SelectedItem;
 
-            // Determine the amount of damage to do to the monster
+            // Determine the amount of damage to do to the enemy
             int damageToMonster = RandomNumberGenerator.NumberBetween(currentWeapon.MinimumDamage, currentWeapon.MaximumDamage);
 
-            // Apply the damage to the monster's CurrentHitPoints
-            _currentMonster.CurrentHitPoints -= damageToMonster;
+            // Apply the damage to the enemy's CurrentHitPoints
+            _currentEnemy.CurrentHitPoints -= damageToMonster;
 
             // Display message
-            rtbMessages.Text += "You hit the " + _currentMonster.Name + " for " + damageToMonster.ToString() + " points." + Environment.NewLine;
+            rtbMessages.Text += "You hit the " + _currentEnemy.Name + " for " + damageToMonster.ToString() + " points." + Environment.NewLine;
 
-            // Check if the monster is dead
-            if (_currentMonster.CurrentHitPoints <= 0)
+            // Check if the enemy is dead
+            if (_currentEnemy.CurrentHitPoints <= 0)
             {
                 // Monster is dead
                 rtbMessages.Text += Environment.NewLine;
-                rtbMessages.Text += "You defeated the " + _currentMonster.Name + Environment.NewLine;
+                rtbMessages.Text += "You defeated the " + _currentEnemy.Name + Environment.NewLine;
 
-                // Give player experience points for killing the monster
-                _player.ExperiencePoints += _currentMonster.RewardExperiencePoints;
-                rtbMessages.Text += "You receive " + _currentMonster.RewardExperiencePoints.ToString() + " experience points" + Environment.NewLine;
+                // Give player experience points for killing the enemy
+                _player.ExperiencePoints += _currentEnemy.RewardExperiencePoints;
+                rtbMessages.Text += "You receive " + _currentEnemy.RewardExperiencePoints.ToString() + " experience points" + Environment.NewLine;
 
-                // Give player gold for killing the monster
-                _player.Gold += _currentMonster.RewardGold;
-                rtbMessages.Text += "You receive " + _currentMonster.RewardGold.ToString() + " gold" + Environment.NewLine;
+                // Give player gold for killing the enemy
+                _player.Gold += _currentEnemy.RewardGold;
+                rtbMessages.Text += "You receive " + _currentEnemy.RewardGold.ToString() + " gold" + Environment.NewLine;
 
-                // Get random loot items from the monster
+                // Get random loot items from the enemy
                 List<InventoryItem> lootedItems = new List<InventoryItem>();
 
                 // Add items to the lootedItems list, comparing a random number to the drop percentage
-                foreach (LootItem lootItem in _currentMonster.LootTable)
+                foreach (LootItem lootItem in _currentEnemy.LootTable)
                 {
                     if (RandomNumberGenerator.NumberBetween(1, 100) <= lootItem.DropPercentage)
                     {
@@ -327,7 +327,7 @@ namespace QPSTheGame
                 // If no items were randomly selected, then add the default loot item(s).
                 if (lootedItems.Count == 0)
                 {
-                    foreach (LootItem lootItem in _currentMonster.LootTable)
+                    foreach (LootItem lootItem in _currentEnemy.LootTable)
                     {
                         if (lootItem.IsDefaultItem)
                         {
@@ -364,19 +364,19 @@ namespace QPSTheGame
                 // Add a blank line to the messages box, just for appearance.
                 rtbMessages.Text += Environment.NewLine;
 
-                // Move player to current location (to heal player and create a new monster to fight)
+                // Move player to current location (to heal player and create a new enemy to fight)
                 MoveTo(_player.CurrentLocation);
             }
             else
             {
                 // Monster is still alive
 
-                // Determine the amount of damage the monster does to the player
+                // Determine the amount of damage the enemy does to the player
                 int damageToPlayer =
-                    RandomNumberGenerator.NumberBetween(0, _currentMonster.MaximumDamage);
+                    RandomNumberGenerator.NumberBetween(0, _currentEnemy.MaximumDamage);
 
                 // Display message
-                rtbMessages.Text += "The " + _currentMonster.Name + " did " + damageToPlayer.ToString() + " points of damage." + Environment.NewLine;
+                rtbMessages.Text += "The " + _currentEnemy.Name + " did " + damageToPlayer.ToString() + " points of damage." + Environment.NewLine;
 
                 // Subtract damage from player
                 _player.CurrentHitPoints -= damageToPlayer;
@@ -387,7 +387,7 @@ namespace QPSTheGame
                 if (_player.CurrentHitPoints <= 0)
                 {
                     // Display message
-                    rtbMessages.Text += "The " + _currentMonster.Name + " killed you." + Environment.NewLine;
+                    rtbMessages.Text += "The " + _currentEnemy.Name + " killed you." + Environment.NewLine;
 
                     // Move player to "Home"
                     MoveTo(World.LocationByID(World.LOCATION_ID_HOME));
@@ -423,12 +423,12 @@ namespace QPSTheGame
 
             // Monster gets their turn to attack
 
-            // Determine the amount of damage the monster does to the player
+            // Determine the amount of damage the enemy does to the player
             int damageToPlayer =
-                RandomNumberGenerator.NumberBetween(0, _currentMonster.MaximumDamage);
+                RandomNumberGenerator.NumberBetween(0, _currentEnemy.MaximumDamage);
 
             // Display message
-            rtbMessages.Text += "The " + _currentMonster.Name + " did " + damageToPlayer.ToString() + " points of damage." + Environment.NewLine;
+            rtbMessages.Text += "The " + _currentEnemy.Name + " did " + damageToPlayer.ToString() + " points of damage." + Environment.NewLine;
 
             // Subtract damage from player
             _player.CurrentHitPoints -= damageToPlayer;
@@ -436,7 +436,7 @@ namespace QPSTheGame
             if (_player.CurrentHitPoints <= 0)
             {
                 // Display message
-                rtbMessages.Text += "The " + _currentMonster.Name + " killed you." + Environment.NewLine;
+                rtbMessages.Text += "The " + _currentEnemy.Name + " killed you." + Environment.NewLine;
 
                 // Move player to "Home"
                 MoveTo(World.LocationByID(World.LOCATION_ID_HOME));
@@ -448,7 +448,7 @@ namespace QPSTheGame
             UpdatePotionListInUI();
         }
 
-        private void QPSTheGame_Load(object sender, EventArgs e)
+        private void RPGTheGame_Load(object sender, EventArgs e)
         {
 
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Engine
 {
-   public class Monster : LivingCreature
+   public class Enemy : LivingEntity
     {
         public int ID { get; set; }
         public string Name { get; set; }
@@ -15,7 +15,7 @@ namespace Engine
         public int RewardGold { get; set; }
         public List<LootItem> LootTable { get; set; }
 
-        public Monster(int id, string name, int maximumDamage,
+        public Enemy(int id, string name, int maximumDamage,
             int rewardExperiencePoints, int rewardGold,
                 int currentHitPoints, int maximumHitPoints) :
                     base(currentHitPoints, maximumHitPoints)

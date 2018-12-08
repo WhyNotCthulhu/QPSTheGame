@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace QPSTheGame.Properties
+namespace RPGTheGame.Properties
 {
 
 
